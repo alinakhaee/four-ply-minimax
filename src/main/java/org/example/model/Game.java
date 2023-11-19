@@ -8,59 +8,36 @@ import java.util.List;
 @Getter
 public class Game {
     private final State initialState;
-//    private final List<Integer> utilities = List.of(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27);
     private final List<Integer> utilities = new ArrayList<>();
+    private final List<State> states = new ArrayList<>();
 
     public Game(){
-        for(int i=0 ; i<27 ; i++){
-            utilities.add(-20 + (int)(Math. random() * 41));
+        for(int i=0 ; i<81 ; i++){
+            State leafState = new State(null, -20 + (int)(Math. random() * 41), "leaf"+(i+1));
+//            State leafState = new State(null, i+1, "leaf"+(i+1));
+            utilities.add(leafState.getUtility());
+            states.add(leafState);
         }
 
+        for(int i=0 ; i<27 ; i++){
+            State state = new State(List.of(states.get(i*3), states.get(i*3+1), states.get(i*3+2)), null, "depth4"+(i+1));
+            states.add(state);
+        }
+
+
+        for(int i=0 ; i<9 ; i++){
+            State state = new State(List.of(states.get(i*3+81), states.get(i*3+82), states.get(i*3+83)), null, "depth3"+(i+1));
+            states.add(state);
+        }
+
+        for(int i=0 ; i<3 ; i++){
+            State state = new State(List.of(states.get(i*3+108), states.get(i*3+109), states.get(i*3+110)), null, "depth2"+(i+1));
+            states.add(state);
+        }
+
+        initialState = new State(List.of(states.get(117), states.get(118), states.get(119)), null, "A");
+
         System.out.println(utilities);
-
-        State leaf1 = new State(null, utilities.get(0), "leaf1");
-        State leaf2 = new State( null, utilities.get(1), "leaf2");
-        State leaf3 = new State( null, utilities.get(2), "leaf3");
-        State leaf4 = new State( null, utilities.get(3), "leaf4");
-        State leaf5 = new State( null, utilities.get(4), "leaf5");
-        State leaf6 = new State( null, utilities.get(5), "leaf6");
-        State leaf7 = new State( null, utilities.get(6), "leaf7");
-        State leaf8 = new State( null, utilities.get(7), "leaf8");
-        State leaf9 = new State( null, utilities.get(8), "leaf9");
-        State leaf10 = new State( null, utilities.get(9), "leaf10");
-        State leaf11 = new State( null, utilities.get(10), "leaf11");
-        State leaf12 = new State( null, utilities.get(11), "leaf12");
-        State leaf13 = new State( null, utilities.get(12), "leaf13");
-        State leaf14 = new State( null, utilities.get(13), "leaf14");
-        State leaf15 = new State( null, utilities.get(14), "leaf15");
-        State leaf16 = new State( null, utilities.get(15), "leaf16");
-        State leaf17 = new State( null, utilities.get(16), "leaf17");
-        State leaf18 = new State( null, utilities.get(17), "leaf18");
-        State leaf19 = new State( null, utilities.get(18), "leaf19");
-        State leaf20 = new State( null, utilities.get(19), "leaf20");
-        State leaf21 = new State( null, utilities.get(20), "leaf21");
-        State leaf22 = new State( null, utilities.get(21), "leaf22");
-        State leaf23 = new State( null, utilities.get(22), "leaf23");
-        State leaf24 = new State( null, utilities.get(23), "leaf24");
-        State leaf25 = new State( null, utilities.get(24), "leaf25");
-        State leaf26 = new State( null, utilities.get(25), "leaf26");
-        State leaf27 = new State( null, utilities.get(26), "leaf27");
-
-        State e = new State( List.of(leaf1, leaf2, leaf3), null, "E");
-        State f = new State( List.of(leaf4, leaf5, leaf6), null, "F");
-        State g = new State( List.of(leaf7, leaf8, leaf9), null, "G");
-        State h = new State( List.of(leaf10, leaf11, leaf12), null, "H");
-        State i = new State( List.of(leaf13, leaf14, leaf15), null, "I");
-        State j = new State( List.of(leaf16, leaf17, leaf18), null, "J");
-        State k = new State( List.of(leaf19, leaf20, leaf21), null, "K");
-        State l = new State( List.of(leaf22, leaf23, leaf24), null, "L");
-        State m = new State( List.of(leaf25, leaf26, leaf27), null, "M");
-
-        State b = new State( List.of(e, f, g), null, "B");
-        State c = new State( List.of(h, i, j), null, "C");
-        State d = new State( List.of(k, l, m), null, "D");
-
-        initialState = new State( List.of(b, c, d), null, "A");
     }
 
     public boolean isTerminal(State state){
