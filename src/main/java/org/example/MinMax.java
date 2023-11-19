@@ -26,7 +26,6 @@ public class MinMax {
         for(Move move : game.getMoves(state)) {
             Pair<Integer, Move> valueMovePair = minValue(game, game.getStateAfterMove(move));
             int v2 = valueMovePair.getValue0();
-            Move move2 = valueMovePair.getValue1();
             if(v2 > v){
                 v = v2;
                 bestMove = new Move(state, move.getToState(), state.getStateName() + (moveIndex++));
@@ -46,7 +45,6 @@ public class MinMax {
         for(Move move : game.getMoves(state)) {
             Pair<Integer, Move> valueMovePair = maxValue(game, game.getStateAfterMove(move));
             int v2 = valueMovePair.getValue0();
-            Move move2 = valueMovePair.getValue1();
             if(v2 < v){
                 v = v2;
 
